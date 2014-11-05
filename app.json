@@ -1,0 +1,36 @@
+{
+    "name": "drf-cached-instances",
+    "description": "Cached instances for Django REST Framework",
+    "repository": "https://github.com/jwhitlock/drf-cached-instances",
+    "keywords": ["python", "django", "drf-cached-instances"],
+    "env": {
+        "ALLOWED_HOSTS": {
+            "description": "Comma-separated list of hostnames to allow",
+            "value": "*"
+        },
+        "DJANGO_DEBUG": {
+            "description": "Setting to 1 enables debug features, such as tracebacks",
+            "value": "0"
+        },
+        "EXTRA_INSTALLED_APPS": {
+            "description": "Comma-separated list of apps to add to INSTALLED_APPS",
+            "value": "gunicorn"
+        },
+        "SECRET_KEY": {
+            "description": "Used for cyptographic signing, and should be set to a unique, unpredictable value.",
+            "generator": "secret"
+        },
+        "SECURE_PROXY_SSL_HEADER": {
+            "description": "HTTP header/value combo that signifies a request is secure",
+            "value": "HTTP_X_FORWARDED_PROTO,https"
+        },
+        "STATIC_ROOT": {
+            "description": "Base path for collected static files",
+            "value": "staticfiles"
+        }
+    },
+    "scripts": {
+        "postdeploy": "./manage.py syncdb --noinput && ./manage.py migrate"
+    },
+    "success_url": "/",
+}

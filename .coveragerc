@@ -1,0 +1,5 @@
+[run]
+branch = True
+
+[report]
+source = drf_cached_instances

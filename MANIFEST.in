@@ -1,0 +1,24 @@
+include .coveragerc
+include .editorconfig
+include AUTHORS.rst
+include CONTRIBUTING.rst
+include HISTORY.rst
+include LICENSE
+include Makefile
+include Procfile
+include README.rst
+include app.json
+include manage.py
+include requirements.txt
+
+recursive-include docs Makefile conf.py *.rst make.bat .keep
+recursive-include static .keep
+recursive-include drf_cached_instances *.py
+recursive-include drf_cached_instances/static *.css *.map *.eot *.svg *.ttf *.woff *.js .keep
+recursive-include drf_cached_instances/templates *.jinja2
+recursive-include drf_cached_instances/tests *.py
+recursive-include sample_site *.py
+recursive-include tests *.py
+
+recursive-exclude * *.py[co]
+recursive-exclude * __pycache__
