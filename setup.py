@@ -24,6 +24,7 @@ test_requirements = [
     'django_nose',
     'django_extensions',
     'mock',
+    'celery',
 ]
 
 setup(

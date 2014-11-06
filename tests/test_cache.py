@@ -30,6 +30,7 @@ class SharedCacheTests(object):
         date_joined = datetime(2014, 9, 22, 9, 11, tzinfo=UTC)
         user = User.objects.create(
             username='the_user', date_joined=date_joined)
+        self.cache.cache and self.cache.cache.clear()
         with self.assertNumQueries(2):
             instances = self.cache.get_instances([('User', user.pk, None)])
         expected = {
@@ -139,7 +140,6 @@ class TestCache(SharedCacheTests, TestCase):
 
     def test_update_instance_no_changes(self):
         """When the representation is unchanged, updates do not cascade."""
-        self.mock_delete.side_effect = Exception('Not Called')
         user = User.objects.create(
             username='username',
             date_joined=datetime(2014, 11, 5, 22, 2, 16, 735772, UTC))
@@ -155,12 +155,18 @@ class TestCache(SharedCacheTests, TestCase):
             },
         }
         self.cache.cache.set(key, dumps(representation))
+        self.mock_delete.side_effect = Exception('Not Called')
         invalid = self.cache.update_instance('User', user.pk, user)
         self.assertEqual([], invalid)
 
     def test_update_instance_with_raw_instance(self):
         """An invalidator loads related PKs with a raw instance."""
-        user = User.objects.create(username='username')
+        # Create user, then delete auto-created cache
+        User.objects.create(username='username')
+        self.cache.cache.clear()
+        self.mock_delete.reset_mock()
+        user = User.objects.get(username='username')
+
         with self.assertNumQueries(1):
             invalid = self.cache.update_instance('User', user.pk, user)
         self.assertEqual([], invalid)
@@ -168,8 +174,12 @@ class TestCache(SharedCacheTests, TestCase):
 
     def test_update_instance_with_loaded_instance(self):
         """An invalidator skips the database with a loaded instance."""
+        # Create user, then delete auto-created cache
         user_pk = User.objects.create(username='username').pk
         user = self.cache.user_default_loader(user_pk)
+        self.cache.cache.clear()
+        self.mock_delete.reset_mock()
+
         with self.assertNumQueries(0):
             invalid = self.cache.update_instance('User', user_pk, user)
         self.assertEqual([], invalid)
