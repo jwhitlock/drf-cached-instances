@@ -47,8 +47,10 @@ class CachedViewMixinTest(APITestCase):
         expected = {
             'id': question.id,
             'question_text': "What is your quest?",
-            'pub_date': question.pub_date
+            'pub_date': question.pub_date,
+            'choices': None,
         }
+        expected['choices'] = obj._data['choices']
         self.assertEqual(expected, obj._data)
 
     def test_retrieve_missing_object_is_error(self):

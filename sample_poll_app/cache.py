@@ -62,15 +62,29 @@ class SampleCache(BaseCache):
         """Convert a Question to a cached instance representation."""
         if not obj:
             return None
+        self.question_default_add_related_pks(obj)
         return dict((
             ('id', obj.id),
             ('question_text', obj.question_text),
             self.field_to_json('DateTime', 'pub_date', obj.pub_date),
+            self.field_to_json(
+                'PKList', 'choices', model=Choice, pks=obj._choice_pks),
         ))
 
     def question_default_loader(self, pk):
         """Load a Question from the database."""
-        return Question.objects.get(pk=pk)
+        try:
+            obj = Question.objects.get(pk=pk)
+        except Question.DoesNotExist:
+            return None
+        else:
+            self.question_default_add_related_pks(obj)
+            return obj
+
+    def question_default_add_related_pks(self, obj):
+        """Add related primary keys to a Question instance."""
+        if not hasattr(obj, '_choice_pks'):
+            obj._choice_pks = list(obj.choices.values_list('pk', flat=True))
 
     def question_default_invalidator(self, obj):
         """Invalidated cached items when the Question changes."""
