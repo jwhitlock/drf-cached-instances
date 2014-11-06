@@ -36,7 +36,7 @@ is open to whoever wants to implement it.
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-Cached Instances for Django REST Framework could always use more documentation, whether as
+drf-cached-instances could always use more documentation, whether as
 part of the official Cached Instances for Django REST Framework docs, in docstrings, or
 even on the web in blog posts, articles, and such.
 
@@ -56,7 +56,7 @@ If you are proposing a feature:
 Get Started!
 ------------
 
-Ready to contribute? Here's how to set up `drf-cached-instances`
+Ready to contribute? Here's how to set up drf-cached-instances
 for local development.
 
 1. Fork the `drf-cached-instances` repo on GitHub.
@@ -72,7 +72,6 @@ for local development.
     $ cd drf-cached-instances/
     $ pip install -r requirements.txt
     $ ./manage.py syncdb
-    $ export DEBUG=1
 
 4. Create a branch for local development::
 
@@ -100,25 +99,28 @@ Pull Request Guidelines
 
 Before you submit a pull request, check that it meets these guidelines:
 
-1. The pull request should include tests.
-2. If the pull request adds functionality, the docs should be updated. Put
+1. The pull request should include tests.  Test coverage should be 100%, line
+   and branch.
+2. Follow PEP8 and PEP257.  ``make qa`` can be used to check compliance.
+3. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 2.6, 2.7, 3.3, and 3.4, and for PyPy. Check
-   https://travis-ci.org/jwhitlock/drf-cached-instances/pull_requests
-   and make sure that the tests pass for all supported Python versions.
+4. The pull request should work for Python 2.6, 2.7, 3.3, and 3.4. Check
+   https://travis-ci.org/jwhitlock/drf-cached-instances/pull_requests and make
+   sure that the tests pass for all supported Python versions.
+   Use ``make qa-all`` to check locally.
 
 Tips
 ----
 
 To run a subset of tests::
 
-    $ ./manage.py test drf_cached_instances/tests/test_views.py
+    $ ./manage.py test tests/test_cache.py
 
 To mark failed tests::
 
     $ ./manage.py test --failed
 
-To re-run only the failed tests:
+To re-run only the failed tests::
 
     $ ./manage.py test --failed
