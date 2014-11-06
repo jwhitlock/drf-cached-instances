@@ -19,7 +19,7 @@ Cached Instances for Django REST Framework
     :alt: The PyPI package
     :target: http://badge.fury.io/py/drf-cached-instances
 
-.. image:: https://pypip.in/d/drf-cached-instances/badge.png
+.. image:: https://pypip.in/download/drf-cached-instances/badge.png
     :height: 22px
     :alt: PyPI download statistics
     :target: https://pypi.python.org/pypi/drf-cached-instances
