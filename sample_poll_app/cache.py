@@ -15,16 +15,13 @@ class SampleCache(BaseCache):
         """Convert a User to a cached instance representation."""
         if not obj:
             return None
-
-        votes_pks = getattr(obj, '_votes_pks', None)
-        if votes_pks is None:
-            votes_pks = list(obj.votes.values_list('pk', flat=True))
-
+        self.user_default_add_related_pks(obj)
         return dict((
             ('id', obj.id),
             ('username', obj.username),
             self.field_to_json('DateTime', 'date_joined', obj.date_joined),
-            self.field_to_json('PKList', 'votes', model=Choice, pks=votes_pks),
+            self.field_to_json(
+                'PKList', 'votes', model=Choice, pks=obj._votes_pks),
         ))
 
     def user_default_loader(self, pk):
@@ -33,8 +30,14 @@ class SampleCache(BaseCache):
             obj = User.objects.get(pk=pk)
         except User.DoesNotExist:
             return None
-        obj._votes_pks = list(obj.votes.values_list('pk', flat=True))
-        return obj
+        else:
+            self.user_default_add_related_pks(obj)
+            return obj
+
+    def user_default_add_related_pks(self, obj):
+        """Add related primary keys to a User instance."""
+        if not hasattr(obj, '_votes_pks'):
+            obj._votes_pks = list(obj.votes.values_list('pk', flat=True))
 
     def user_default_invalidator(self, obj):
         """Invalidate cached items when the User changes."""
@@ -77,16 +80,14 @@ class SampleCache(BaseCache):
         """Convert a Choice to a cached instance representation."""
         if not obj:
             return None
-
-        voter_pks = getattr(obj, '_voter_pks', None)
-        if voter_pks is None:
-            voter_pks = list(obj.voters.values_list('pk', flat=True))
+        self.choice_default_add_related_pks(obj)
         return dict((
             ('id', obj.id),
             ('choice_text', obj.choice_text),
             self.field_to_json(
                 'PK', 'question', model=Question, pk=obj.question_id),
-            self.field_to_json('PKList', 'voters', model=User, pks=voter_pks)
+            self.field_to_json(
+                'PKList', 'voters', model=User, pks=obj._voter_pks)
         ))
 
     def choice_default_loader(self, pk):
@@ -96,8 +97,13 @@ class SampleCache(BaseCache):
         except Choice.DoesNotExist:
             return None
         else:
-            obj._voter_pks = obj.voters.values_list('pk', flat=True)
+            self.choice_default_add_related_pks(obj)
             return obj
+
+    def choice_default_add_related_pks(self, obj):
+        """Add related primary keys to a Choice instance."""
+        if not hasattr(obj, '_voter_pks'):
+            obj._voter_pks = obj.voters.values_list('pk', flat=True)
 
     def choice_default_invalidator(self, obj):
         """Invalidated cached items when the Choice changes."""
