@@ -58,7 +58,7 @@ SECRET_KEY = environ.get(
     'SECRET_KEY', 'THIS_IS_A_SUPER_BAD_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = environ.get("DEBUG", '0') in (1, '1')
+DEBUG = environ.get("DEBUG", '1') in (1, '1')
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS', '').split(',')
@@ -80,9 +80,10 @@ INSTALLED_APPS = [
     # 3rd party applications
     'django_extensions',
     'django_nose',
+    'rest_framework',
 
     # Our applications
-    'drf_cached_instances',
+    'sample_poll_app',
 ]
 if environ.get('EXTRA_INSTALLED_APPS'):
     INSTALLED_APPS + environ['EXTRA_INSTALLED_APPS'].split(',')
@@ -135,14 +136,6 @@ STATIC_URL = '/static/'
 # 3rd Party Libraries
 #
 
-# Jingo / Jinja2 templates
-TEMPLATE_LOADERS = (
-    'jingo.Loader',
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-JINGO_INCLUDE_PATTERN = r'\.jinja2'
-
 # Django nose
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
@@ -155,3 +148,10 @@ if DEBUG:
     else:
         assert debug_toolbar
         INSTALLED_APPS.append('debug_toolbar')
+
+# Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

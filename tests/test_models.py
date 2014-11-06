@@ -2,9 +2,10 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from drf_cached_instances.models import CachedModel, CachedQueryset
+from drf_cached_instances.models import (
+    CachedModel, CachedQueryset, PkOnlyModel, PkOnlyQueryset)
 
-from .cache import UserCache
+from sample_poll_app.cache import SampleCache
 
 
 class TestCachedModel(TestCase):
@@ -28,7 +29,7 @@ class TestCachedQueryset(TestCase):
 
     def setUp(self):
         """Shared objects for testing."""
-        self.cache = UserCache()
+        self.cache = SampleCache()
         self.cache.cache.clear()
 
     def create_users(self, number):
@@ -48,6 +49,11 @@ class TestCachedQueryset(TestCase):
         self.assertFalse(User.objects.filter(pk=666).exists())
         cq = CachedQueryset(self.cache, User.objects.all())
         self.assertRaises(User.DoesNotExist, cq.get, pk=666)
+
+    def test_all(self):
+        """Filtering by all() returns the CachedQueryset."""
+        cq = CachedQueryset(self.cache, User.objects.all())
+        self.assertEqual(cq, cq.all())
 
     def test_none(self):
         """An empty queryset has no items."""
@@ -72,6 +78,20 @@ class TestCachedQueryset(TestCase):
         self.assertEqual(3, len(pks))
         self.assertEqual([1, 2, 3], pks)
 
+    def test_iteration_of_populated_queryset(self):
+        """Iterating through a queryset returns CachedModels."""
+        self.create_users(10)
+        user_pks = list(User.objects.values_list('pk', flat=True))
+        cq = CachedQueryset(self.cache, User.objects.order_by('pk'))
+        for pk, cm in zip(user_pks, cq):
+            self.assertIsInstance(cm, CachedModel)
+            self.assertEqual(pk, cm.id)
+
+    def test_iteration_of_empty_queryset(self):
+        """Iterating through a queryset returns CachedModels."""
+        cq = CachedQueryset(self.cache, User.objects.order_by('pk'))
+        self.assertFalse(list(cq))
+
     def test_count_by_queryset(self):
         """Getting the count with an empty cache is a database operation."""
         self.create_users(10)
@@ -86,6 +106,15 @@ class TestCachedQueryset(TestCase):
         cq = CachedQueryset(self.cache, User.objects.all(), range(5))
         with self.assertNumQueries(0):
             self.assertEqual(5, cq.count())
+
+    def test_filter(self):
+        """A queryset without pks retrived can be filtered by pk."""
+        self.create_users(5)
+        user = User.objects.latest('id')
+        cq = CachedQueryset(self.cache, User.objects.all())
+        users = list(cq.filter(id=user.id))
+        self.assertEqual(1, len(users))
+        self.assertEqual(user.id, users[0].id)
 
     def test_get_slice_by_queryset(self):
         """A queryset slice of postpones database access until usage."""
@@ -104,3 +133,38 @@ class TestCachedQueryset(TestCase):
             users = cq[0:5]
         with self.assertNumQueries(0):
             self.assertEqual(5, users.count())
+
+
+class TestPkOnlvQueryset(TestCase):
+
+    """Tests for PkOnlyQueryset."""
+
+    def setUp(self):
+        """Shared objects for testing."""
+        self.cache = SampleCache()
+        self.cache.cache.clear()
+
+    def test_iter(self):
+        """Iterating a PkOnlyQueryset returns PkOnlyModels."""
+        pks = [1, 2, 3]
+        pkvl = PkOnlyQueryset(self.cache, User, pks)
+        for pk, pm in zip(pks, pkvl):
+            self.assertIsInstance(pm, PkOnlyModel)
+            self.assertEqual(pm.pk, pk)
+
+    def test_iter_empty_list(self):
+        """Iterating an PkOnlyQueryset returns an empty list."""
+        pkvl = PkOnlyQueryset(self.cache, User, [])
+        self.assertFalse(list(pkvl))
+
+    def test_filter_all(self):
+        """Filtering with .all() returns the PkOnlyQueryset."""
+        pkvl = PkOnlyQueryset(self.cache, User, range(5))
+        pkall = pkvl.all()
+        self.assertEqual(pkvl, pkall)
+
+    def test_values_list(self):
+        """A limited version of values_list returns pks."""
+        pkvl = PkOnlyQueryset(self.cache, User, range(5))
+        values_list = pkvl.values_list('id', flat=True)
+        self.assertEqual(range(5), values_list)

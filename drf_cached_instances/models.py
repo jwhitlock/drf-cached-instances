@@ -21,7 +21,7 @@ class PkOnlyModel(object):
         self.pk = pk
 
 
-class PkOnlyValuesList(object):
+class PkOnlyQueryset(object):
 
     """Emulate a Django queryset with only the primary keys (pks) available.
 
@@ -31,7 +31,7 @@ class PkOnlyValuesList(object):
     """
 
     def __init__(self, cache, model, pks):
-        """Initialize PkOnlyValuesList."""
+        """Initialize PkOnlyQueryset."""
         self.cache = cache
         self.model = model
         self.pks = pks
@@ -40,10 +40,6 @@ class PkOnlyValuesList(object):
         """Return PkOnlyModels for each pk."""
         for pk in self.pks:
             yield PkOnlyModel(self.cache, self.model, pk)
-
-    def __getitem__(self, index):
-        """Return a PkOnlyModel by index or range."""
-        return self.pks[index]
 
     def all(self):
         """Handle asking for an unfiltered queryset."""
@@ -58,7 +54,7 @@ class PkOnlyValuesList(object):
         assert flat is True
         assert len(args) == 1
         assert args[0] == self.model._meta.pk.name
-        return self
+        return self.pks
 
 
 class CachedModel(object):

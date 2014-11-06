@@ -16,6 +16,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 requirements = [
     'Django>=1.6',
     'pytz',
+    'djangorestframework',
 ]
 
 test_requirements = [

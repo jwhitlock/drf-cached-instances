@@ -4,6 +4,7 @@
 
 Django==1.7.1
 pytz==2014.9
+djangorestframework==2.4.4
 
 #
 # Requirements for developing drf-cached-instances

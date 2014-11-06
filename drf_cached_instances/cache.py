@@ -5,10 +5,10 @@ from datetime import date, datetime, timedelta
 from pytz import utc
 import json
 
+from django.conf import settings
 from django.db.models.loading import get_model
 
-from .models import PkOnlyModel, PkOnlyValuesList
-from .settings import USE_DRF_INSTANCE_CACHE
+from .models import PkOnlyModel, PkOnlyQueryset
 
 
 class BaseCache(object):
@@ -36,9 +36,11 @@ class BaseCache(object):
         settings.USE_DRF_INSTANCE_CACE=False.  It also delays import so that
         Django Debug Toolbar will record cache requests.
         """
-        if not self._cache and USE_DRF_INSTANCE_CACHE:
-            from django.core.cache import cache
-            self._cache = cache
+        if not self._cache:
+            use_cache = getattr(settings, 'USE_DRF_INSTANCE_CACHE', True)
+            if use_cache:
+                from django.core.cache import cache
+                self._cache = cache
         return self._cache
 
     def key_for(self, version, model_name, obj_pk):
@@ -243,12 +245,12 @@ class BaseCache(object):
             return ts
 
     def field_pklist_from_json(self, data):
-        """Load a PkOnlyValuesList from a JSON dict.
+        """Load a PkOnlyQueryset from a JSON dict.
 
         This uses the same format as cached_queryset_from_json
         """
         model = get_model(data['app'], data['model'])
-        return PkOnlyValuesList(self, model, data['pks'])
+        return PkOnlyQueryset(self, model, data['pks'])
 
     def field_pklist_to_json(self, model, pks):
         """Convert a list of primary keys to a JSON dict.

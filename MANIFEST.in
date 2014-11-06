@@ -14,9 +14,8 @@ include requirements.txt
 recursive-include docs Makefile conf.py *.rst make.bat .keep
 recursive-include static .keep
 recursive-include drf_cached_instances *.py
-recursive-include drf_cached_instances/static *.css *.map *.eot *.svg *.ttf *.woff *.js .keep
-recursive-include drf_cached_instances/templates *.jinja2
-recursive-include drf_cached_instances/tests *.py
+recursive-include sample_poll_app *.py
+recursive-include sample_poll_app/templates *.html
 recursive-include sample_site *.py
 recursive-include tests *.py
 
