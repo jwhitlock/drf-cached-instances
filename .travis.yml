@@ -1,7 +1,7 @@
 # Config file for automatic testing at travis-ci.org
 
 language: python
-install: pip install tox
+install: pip install tox coveralls
 script: tox
 env:
   - TOXENV=py26-django16

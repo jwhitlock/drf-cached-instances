@@ -9,10 +9,10 @@ Cached Instances for Django REST Framework
     :alt: The status of Travis continuous integration tests
     :target: https://travis-ci.org/jwhitlock/drf-cached-instances
 
-.. image:: https://coveralls.io/repos/jwhitlock/drf-cached-instances/badge.png?branch=master
+.. image:: https://coveralls.io/repos/jwhitlock/drf-cached-instances/badge.png
+    :target: https://coveralls.io/r/jwhitlock/drf-cached-instances
     :height: 22px
     :alt: The code coverage
-    :target: https://coveralls.io/r/jwhitlock/drf-cached-instances?branch=master
 
 .. image:: https://badge.fury.io/py/drf-cached-instances.png
     :height: 22px
