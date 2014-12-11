@@ -148,7 +148,9 @@ class BaseCache(object):
 
         return ret
 
-    def update_instance(self, model_name, pk, instance=None, version=None):
+    def update_instance(
+            self, model_name, pk, instance=None, version=None,
+            update_only=False):
         """Create or update a cached instance.
 
         Keyword arguments are:
@@ -156,6 +158,10 @@ class BaseCache(object):
         pk - The primary key of the instance
         instance - The Django model instance, or None to load it
         versions - Version to update, or None for all
+        update_only - If False (default), then missing cache entries will be
+            populated and will cause follow-on invalidation.  If True, then
+            only entries already in the cache will be updated and cause
+            follow-on invalidation.
 
         Return is a list of tuples (model name, pk, immediate) that also needs
         to be updated.
@@ -184,7 +190,10 @@ class BaseCache(object):
                 current = json.loads(current_raw) if current_raw else None
 
                 # Get new value
-                new = serializer(instance)
+                if update_only and current_raw is None:
+                    new = None
+                else:
+                    new = serializer(instance)
                 deleted = not instance
 
                 # If cache is invalid, update cache

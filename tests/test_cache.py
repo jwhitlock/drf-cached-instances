@@ -208,6 +208,21 @@ class TestCache(SharedCacheTests, TestCase):
         self.assertEqual(expected_update, to_update)
         self.mock_delete.assertEqual('drf_default_question_%s' % question.pk)
 
+    def test_update_instance_cache_miss_update_only(self):
+        """With update_only, cache misses don't update or cascade."""
+        user = User.objects.create(username='voter')
+        question = Question.objects.create(
+            question_text='What is your favorite color?',
+            pub_date=datetime(2014, 11, 6, 8, 45, 49, 538232, UTC))
+        choice = Choice.objects.create(
+            question=question, choice_text="Blue. No, Green!")
+        choice.voters.add(user)
+        self.cache.cache.clear()
+        to_update = self.cache.update_instance(
+            'Choice', choice.pk, update_only=True)
+        self.assertEqual([], to_update)
+        self.mock_delete.assertEqual('drf_default_question_%s' % question.pk)
+
 
 @override_settings(USE_DRF_INSTANCE_CACHE=False)
 class TestCacheDisabled(SharedCacheTests, TestCase):
