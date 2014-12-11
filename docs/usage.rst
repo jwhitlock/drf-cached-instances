@@ -129,6 +129,27 @@ This can be done by adding signal hooks for model modifications in models.py::
 This will follow the invalidation logic in the Cache class, to ensure that the
 cache is consistant across related instances.
 
+Handling cascading cache updates
+--------------------------------
+
+The ``update_cache_for_instance`` method uses recursion to ensure the cache is
+consistant.  By default, this populates missing cache entries as well.  For
+highly related instances, this would result in loading a lot of the database
+into a cold cache, making the first update very slow.
+
+There are a few ways to handle the cold cache problem.  The first is to use
+a asynchronous task system like Celery_ for updates.  This way, updates can
+return quickly while backend processes warm the cache.
+
+Another method is to use ``update_only=True`` when calling
+``cache.update_instance``.  This will stop the invalidation chain on cache
+misses, which may result in an inconsistent cache for cached instances that are
+a few steps away from the updates instance.  Eventual consistency can be
+maintained by automatically expiring cache entries.
+
+You may want to configure ``update_only=True`` in development for speed, and
+use the default ``update_only=False`` in production.
+
 .. _`Django REST Framework`: http://www.django-rest-framework.org
 .. _Celery: http://www.celeryproject.org
 .. _`web-platform-compat`: https://github.com/mozilla/web-platform-compat
