@@ -1,12 +1,11 @@
-.. drf-cached-instances documentation master file, created by
-   sphinx-quickstart on Mon Jul 21 13:24:51 2014.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+==========================================
+Cached Instances for Django REST Framework
+==========================================
 
 .. include:: ../README.rst
+    :start-after: .. Omit badges from docs
 
-Contents
-========
+Contents:
 
 .. toctree::
    :maxdepth: 2

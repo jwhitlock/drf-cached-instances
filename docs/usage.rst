@@ -2,13 +2,13 @@
 Usage
 =====
 
-drf-cached-instances is designed to work with `Django REST Framework`_ (DRF)
-2.x, using a cache for read-only operations such as getting an instance or list
+drf-cached-instances is designed to work with `Django REST Framework`_ (DRF),
+using a cache for read-only operations such as getting an instance or list
 of instances.  You may also want Celery_ for asynchronously updating the
 cache.
 
 There are a few steps needed to integrate drf-cached-instances into your
-project.  See the sample app sample_poll_app for a small example, or
+project.  See the sample app ``sample_poll_app`` for a small example, or
 `web-platform-compat`_ for a fuller example.
 
 Create an app-specific cache strategy

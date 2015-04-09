@@ -11,7 +11,19 @@ except ImportError:
 
 
 readme = open('README.rst').read()
+body_tag = ".. Omit badges from docs"
+readme_body_start = readme.index(body_tag)
+assert readme_body_start
+readme_body = readme[readme_body_start + len(body_tag):]
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+long_description = """
+==========================================
+Cached Instances for Django REST Framework
+==========================================
+%s
+
+%s
+""" % (readme_body, history)
 
 requirements = [
     'Django>=1.6',
@@ -31,7 +43,7 @@ setup(
     name='drf-cached-instances',
     version=version,
     description='Cached instances for Django REST Framework',
-    long_description=readme + '\n\n' + history,
+    long_description=long_description,
     author='John Whitlock',
     author_email='john@factorialfive.com',
     url='https://github.com/jwhitlock/drf-cached-instances',

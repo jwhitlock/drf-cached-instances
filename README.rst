@@ -29,15 +29,16 @@ Cached Instances for Django REST Framework
     :alt: Deploy to Heroku
     :target: https://heroku.com/deploy?template=https://github.com/jwhitlock/drf-cached-instances
 
+.. Omit badges from docs
+
 Speed up `Django REST Framework`_ (DRF) reads by storing instance data in cache.
 
 This code was split from web-platform-compat_.  You may be interested in
 viewing the web-platform-compat source code for a full example implementation.
 
 * Code: https://github.com/jwhitlock/drf-cached-instances
-* Free software: Mozilla Public License Version 2.0
+* Free software: `Mozilla Public License Version 2.0`_
 * Documentation: https://drf-cached-instances.readthedocs.org
-* Generated from: https://github.com/jwhitlock/cookiecutter-django-jw.git
 
 How it works
 ------------
@@ -71,9 +72,10 @@ With only a few changes to existing code, your read views could be a lot faster.
 Project status
 --------------
 This code is used for the web-platform-compat_ project, which is in development
-as of Novemeber 2014.  The code may change in response to the needs of the
-web-platform-compat project.  It is expected to stabilize by early 2015.  And,
+as of April 2015.  The code may change in response to the needs of the
+web-platform-compat project.  It is expected to stabilize by mid 2015.  And,
 like all open source projects, more documentation is needed.
 
 .. _`Django REST Framework`: http://www.django-rest-framework.org
 .. _`web-platform-compat`: https://github.com/mozilla/web-platform-compat
+.. _`Mozilla Public License Version 2.0`: https://www.mozilla.org/MPL/2.0/

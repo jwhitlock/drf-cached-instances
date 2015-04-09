@@ -1,6 +1,6 @@
 About this repository
 =====================
-This project was created from the cookiecutter-django-jw template, using
+This project was created from the `cookiecutter-django-jw`_ template, using
 a process like this:
 
 .. code-block:: sh
@@ -40,6 +40,8 @@ a process like this:
     $ pip install -r requirements.txt
      (development requirements installed)
     $ ./manage.py migrate
+
+.. _`cookiecutter-django-jw`: https://github.com/jwhitlock/cookiecutter-django-jw.git
 
 Development Features
 --------------------
@@ -105,8 +107,3 @@ When you've got the app configured, deploy your code to run it:
     $ heroku open
 
 .. _12factor: http://12factor.net
-
-Getting rid of this documentation
----------------------------------
-Edit or remove "docs/project.rst".  If you remove it, also remove the
-"project" line from "docs/index.rst".
