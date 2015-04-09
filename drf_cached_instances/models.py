@@ -70,6 +70,8 @@ class CachedModel(object):
         """Return an attribute from the cached data."""
         if name in self._data:
             return self._data[name]
+        elif name == 'pk':
+            return self._data.get(self._model._meta.pk.attname)
         else:
             raise AttributeError(
                 "%r object has no attribute %r" %

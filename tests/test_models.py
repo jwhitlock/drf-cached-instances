@@ -22,6 +22,14 @@ class TestCachedModel(TestCase):
         cm = CachedModel(User, {'username': 'frank'})
         self.assertRaises(AttributeError, getattr, cm, 'email')
 
+    def test_pk_alias(self):
+        """Accessing .pk returns the ID.
+
+        DRF 3 uses pk to determine if a model has been created.
+        """
+        cm = CachedModel(User, {'id': 7, 'username': 'frank'})
+        self.assertEqual(7, cm.pk)
+
 
 class TestCachedQueryset(TestCase):
 
