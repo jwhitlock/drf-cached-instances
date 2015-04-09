@@ -30,7 +30,7 @@ clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
-	find . -name '__pycache__' -exec rm -fr {} +
+	find . -name '__pycache__' -exec rm -f -R {} +
 
 clean-test:
 	rm -fr .tox/
@@ -44,7 +44,7 @@ test:
 	./manage.py test
 
 test-all:
-	tox
+	tox --skip-missing-interpreters
 
 coverage:
 	coverage erase
