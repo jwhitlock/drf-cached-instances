@@ -47,6 +47,13 @@ class BaseCache(object):
         """Get the cache key for the cached instance."""
         return 'drfc_{0}_{1}_{2}'.format(version, model_name, obj_pk)
 
+    def delete_all_versions(self, model_name, obj_pk):
+        """Delete all versions of a cached instance."""
+        if self.cache:
+            for version in self.versions:
+                key = self.key_for(version, model_name, obj_pk)
+                self.cache.delete(key)
+
     def model_function(self, model_name, version, func_name):
         """Return the model-specific caching function."""
         assert func_name in ('serializer', 'loader', 'invalidator')

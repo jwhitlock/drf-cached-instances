@@ -223,6 +223,39 @@ class TestCache(SharedCacheTests, TestCase):
         self.assertEqual([], to_update)
         self.mock_delete.assertEqual('drf_default_question_%s' % question.pk)
 
+    def test_delete_all_versions_one_version(self):
+        """Delete all cached instances for a model and ID."""
+        self.cache.delete_all_versions("Model", 86)
+        self.mock_delete.assert_called_once_with("drfc_default_Model_86")
+
+
+@override_settings(USE_DRF_INSTANCE_CACHE=True)
+class TestVersionsCache(SharedCacheTests, TestCase):
+
+    """Test cache functions when multiple versions are defined."""
+
+    def setUp(self):
+        """Setup environment for an enabled cache."""
+        self.cache = SampleCache()
+        self.cache.versions = ['default', 'v2']
+        self.cache.cache.clear()
+        self.mock_delete = mock.Mock()
+        self.cache.cache.delete = self.mock_delete
+
+    def test_update_instance_unhandled_model(self):
+        """An error is raised update a model defined as None in the Cache."""
+        self.cache.bar_v2_serializer = None
+        self.cache.bar_v2_loader = None
+        self.cache.bar_v2_invalidator = None
+        super(TestVersionsCache, self).test_update_instance_unhandled_model()
+
+    def test_delete_all_versions_two_versions(self):
+        """Delete all cached instances with multiple versions."""
+        self.cache.delete_all_versions("Model", 86)
+        self.mock_delete.assert_has_calls([
+            mock.call("drfc_default_Model_86"),
+            mock.call("drfc_v2_Model_86")])
+
 
 @override_settings(USE_DRF_INSTANCE_CACHE=False)
 class TestCacheDisabled(SharedCacheTests, TestCase):
@@ -242,6 +275,10 @@ class TestCacheDisabled(SharedCacheTests, TestCase):
         with self.assertNumQueries(0):
             invalid = self.cache.update_instance('User', 123)
         self.assertEqual([], invalid)
+
+    def test_delete_all_versions(self):
+        """No error when requesting to delete all cached instances."""
+        self.cache.delete_all_versions("Model", 86)
 
 
 class TestFieldConverters(TestCase):
