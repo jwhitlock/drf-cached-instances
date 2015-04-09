@@ -27,10 +27,10 @@ clean-build:
 	rm -fr *.egg-info
 
 clean-pyc:
-	find . -name '*.pyc' -exec rm -f {} +
-	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f {} +
-	find . -name '__pycache__' -exec rm -f -R {} +
+	find . \( ! -name .tox \) -name '*.pyc' -exec rm -f {} +
+	find . \( ! -name .tox \) -name '*.pyo' -exec rm -f {} +
+	find . \( ! -name .tox \) -name '*~' -exec rm -f {} +
+	find . \( ! -name .tox \) -name '__pycache__' -exec rm -f -R {} +
 
 clean-test:
 	rm -fr .tox/
@@ -59,8 +59,13 @@ docs:
 	open docs/_build/html/index.html
 
 release: clean
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+	python setup.py sdist bdist_wheel upload
+	python -m webbrowser -n https://pypi.python.org/pypi/drf-cached-instances
+
+test-release: sdist
+	python setup.py register -r https://testpypi.python.org/pypi
+	python setup.py sdist bdist_wheel upload -r https://testpypi.python.org/pypi
+	python -m webbrowser -n https://testpypi.python.org/pypi/drf-cached-instances
 
 sdist: clean
 	python setup.py sdist
