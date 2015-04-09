@@ -38,8 +38,8 @@ coverage==3.7.1
 
 # Better test runner
 nose==1.3.4
-# Until django-nose==1.3 is release to PyPI
-https://github.com/jwhitlock/django-nose/archive/django-1.7.zip
+# Until django-nose==1.4 is released to PyPI
+git+git://github.com/jwhitlock/django-nose@178_fix_argparse_v2#egg=django-nose
 
 # Django extensions
 six==1.8.0
