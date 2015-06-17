@@ -3,6 +3,10 @@
 History
 =======
 
+0.3.1 (2015-06-16)
+------------------
+* Move get_object_or_404 to mixin method, to allow easier extending.
+
 0.3.0 (2015-04-09)
 ------------------
 * Tested with Django 1.8

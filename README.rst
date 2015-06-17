@@ -2,8 +2,6 @@
 Cached Instances for Django REST Framework
 ==========================================
 
-.. This causes warnings from Sphinx due to external images, but the GitHub parser ignores raw HTML
-
 .. image:: https://travis-ci.org/jwhitlock/drf-cached-instances.png?branch=master
     :height: 22px
     :alt: The status of Travis continuous integration tests
@@ -72,8 +70,8 @@ With only a few changes to existing code, your read views could be a lot faster.
 Project status
 --------------
 This code is used for the web-platform-compat_ project, which is in development
-as of April 2015.  The code may change in response to the needs of the
-web-platform-compat project.  It is expected to stabilize by mid 2015.  And,
+as of June 2015.  The code may change in response to the needs of the
+web-platform-compat project.  It is expected to stabilize by early 2016.  And,
 like all open source projects, more documentation is needed.
 
 .. _`Django REST Framework`: http://www.django-rest-framework.org
