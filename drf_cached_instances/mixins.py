@@ -1,23 +1,8 @@
 """Mixins to add caching to Django REST Framework viewsets."""
 from django.http import Http404
-from rest_framework.generics import get_object_or_404 as _get_object_or_404
+from rest_framework.generics import get_object_or_404
 
 from .models import CachedQueryset
-
-
-def get_object_or_404(queryset, *filter_args, **filter_kwargs):
-    """Return an object or raise a 404.
-
-    Same as Django's standard shortcut, but make sure to raise 404
-    if the filter_kwargs don't match the required types.
-    """
-    if isinstance(queryset, CachedQueryset):
-        try:
-            return queryset.get(*filter_args, **filter_kwargs)
-        except queryset.model.DoesNotExist:
-            raise Http404('No %s matches the given query.' % queryset.model)
-    else:
-        return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
 
 
 class CachedViewMixin(object):
@@ -28,6 +13,7 @@ class CachedViewMixin(object):
     """
 
     cache_version = 'default'
+    get_object_or_404 = get_object_or_404
 
     def get_queryset(self):
         """Get the queryset for the action.
@@ -61,9 +47,24 @@ class CachedViewMixin(object):
         lookup = self.kwargs.get(lookup_url_kwarg, None)
         assert lookup is not None, "Other lookup methods are disabled"
         filter_kwargs = {self.lookup_field: lookup}
-        obj = get_object_or_404(queryset, **filter_kwargs)
+        obj = self.get_object_or_404(queryset, **filter_kwargs)
 
         # May raise a permission denied
         self.check_object_permissions(self.request, obj)
 
         return obj
+
+    def get_object_or_404(self, queryset, *filter_args, **filter_kwargs):
+        """Return an object or raise a 404.
+
+        Same as Django's standard shortcut, but make sure to raise 404
+        if the filter_kwargs don't match the required types.
+        """
+        if isinstance(queryset, CachedQueryset):
+            try:
+                return queryset.get(*filter_args, **filter_kwargs)
+            except queryset.model.DoesNotExist:
+                raise Http404(
+                    'No %s matches the given query.' % queryset.model)
+        else:
+            return get_object_or_404(queryset, *filter_args, **filter_kwargs)
