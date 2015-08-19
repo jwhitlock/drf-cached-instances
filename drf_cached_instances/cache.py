@@ -33,7 +33,7 @@ class BaseCache(object):
         """Get the Django cache interface.
 
         This allows disabling the cache with
-        settings.USE_DRF_INSTANCE_CACE=False.  It also delays import so that
+        settings.USE_DRF_INSTANCE_CACHE=False.  It also delays import so that
         Django Debug Toolbar will record cache requests.
         """
         if not self._cache:
