@@ -26,8 +26,8 @@ Cached Instances for Django REST Framework
 
 Speed up `Django REST Framework`_ (DRF) reads by storing instance data in cache.
 
-This code was split from web-platform-compat_.  You may be interested in
-viewing the web-platform-compat source code for a full example implementation.
+This code was split from browsercompat_.  You may be interested in
+viewing the browsercompat source code for a full example implementation.
 
 * Code: https://github.com/jwhitlock/drf-cached-instances
 * Free software: `Mozilla Public License Version 2.0`_
@@ -64,11 +64,11 @@ With only a few changes to existing code, your read views could be a lot faster.
 
 Project status
 --------------
-This code is used for the web-platform-compat_ project, which is in development
-as of June 2015.  The code may change in response to the needs of the
-web-platform-compat project.  It is expected to stabilize by early 2016.  And,
+This code is used for the browsercompat_ project, which is in development
+as of September 2015.  The code may change in response to the needs of the
+browsercompat project.  It is expected to stabilize by early 2016.  And,
 like all open source projects, more documentation is needed.
 
 .. _`Django REST Framework`: http://www.django-rest-framework.org
-.. _`web-platform-compat`: https://github.com/mozilla/web-platform-compat
+.. _`browsercompat`: https://github.com/mdn/browsercompat
 .. _`Mozilla Public License Version 2.0`: https://www.mozilla.org/MPL/2.0/
