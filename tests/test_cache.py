@@ -206,7 +206,12 @@ class TestCache(SharedCacheTests, TestCase):
             ('User', user.pk, 'default'),
         ]
         self.assertEqual(expected_update, to_update)
-        self.mock_delete.assertEqual('drf_default_question_%s' % question.pk)
+        self.mock_delete.assert_has_calls([
+            mock.call('drfc_user_count'),
+            mock.call('drfc_default_Question_%s' % question.pk),
+            mock.call('drfc_user_count'),
+            mock.call('drfc_default_Question_%s' % question.pk)])
+        self.assertEqual(4, self.mock_delete.call_count)
 
     def test_update_instance_cache_miss_update_only(self):
         """With update_only, cache misses don't update or cascade."""
@@ -221,7 +226,11 @@ class TestCache(SharedCacheTests, TestCase):
         to_update = self.cache.update_instance(
             'Choice', choice.pk, update_only=True)
         self.assertEqual([], to_update)
-        self.mock_delete.assertEqual('drf_default_question_%s' % question.pk)
+        self.mock_delete.assert_has_calls([
+            mock.call('drfc_user_count'),
+            mock.call('drfc_default_Question_%s' % question.pk),
+            mock.call('drfc_user_count')])
+        self.assertEqual(3, self.mock_delete.call_count)
 
     def test_delete_all_versions_one_version(self):
         """Delete all cached instances for a model and ID."""
