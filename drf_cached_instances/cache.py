@@ -6,7 +6,12 @@ from pytz import utc
 import json
 
 from django.conf import settings
-from django.db.models.loading import get_model
+try:
+    # Django 1.8 and later
+    from django.apps import apps
+    get_model = apps.get_model
+except ImportError:  # pragma: nocover
+    from django.db.models.loading import get_model
 
 from .models import PkOnlyModel, PkOnlyQueryset
 
