@@ -2,4 +2,4 @@
 
 __author__ = 'John Whitlock'
 __email__ = 'john@factorialfive.com'
-__version__ = '0.3.1'
+__version__ = '0.3.2'

@@ -3,6 +3,13 @@
 History
 =======
 
+0.3.2 (2015-09-23)
+------------------
+* Remove deprecation warning in Django 1.8
+* Expand tests to Django master and Django REST Framework 3.2
+* Fix invalid mock.patch tests that break under mock 1.3.0
+* Documentation updates and fixes
+
 0.3.1 (2015-06-16)
 ------------------
 * Move get_object_or_404 to mixin method, to allow easier extending.
