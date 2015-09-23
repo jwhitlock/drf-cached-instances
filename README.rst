@@ -3,27 +3,22 @@ Cached Instances for Django REST Framework
 ==========================================
 
 .. image:: http://img.shields.io/travis/jwhitlock/drf-cached-instances/master.svg
-    :height: 35px
     :alt: The status of Travis continuous integration tests
     :target: https://travis-ci.org/jwhitlock/drf-cached-instances
 
 .. image:: https://img.shields.io/coveralls/jwhitlock/drf-cached-instances/master.svg
-    :height: 35px
     :target: https://coveralls.io/r/jwhitlock/drf-cached-instances
     :alt: The code coverage
 
 .. image:: https://img.shields.io/pypi/v/drf-cached-instances.svg
-    :height: 35px
     :alt: The PyPI package
     :target: https://pypi.python.org/pypi/drf-cached-instances
 
 .. image:: https://img.shields.io/pypi/dm/drf-cached-instances.svg
-    :height: 35px
     :alt: PyPI download statistics
     :target: https://pypi.python.org/pypi/drf-cached-instances
 
 .. image:: https://www.herokucdn.com/deploy/button.png
-    :height: 35px
     :alt: Deploy to Heroku
     :target: https://heroku.com/deploy?template=https://github.com/jwhitlock/drf-cached-instances
 
