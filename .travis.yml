@@ -9,7 +9,16 @@ env:
   - TOXENV=py27-django17-drf24
   - TOXENV=py34-django17-drf31
   - TOXENV=py27-django18-drf24
-  - TOXENV=py34-django18-drf31
+  - TOXENV=py34-django18-drf32
+  - TOXENV=py27-djangomaster-drf24
+  - TOXENV=py34-djangomaster-drf32
   - TOXENV=docs
   - TOXENV=flake8
   - TOXENV=coverage
+matrix:
+    allow_failures:
+        # Master is allowed to fail
+        - env: TOXENV=py27-djangomaster-drf24
+        - env: TOXENV=py34-djangomaster-drf32
+
+
