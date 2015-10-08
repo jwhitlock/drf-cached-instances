@@ -331,18 +331,19 @@ class TestFieldConverters(TestCase):
         self.assertEqual(out, datetime(2014, 9, 22, 8, 52, 0, 123456, UTC))
 
     def test_timedelta_without_fractional_seconds(self):
-        """Timedelta without fractions of a second can be stored and retrieved."""
+        """Timedelta without fractional seconds can be stored and retrieved."""
         td = timedelta(days=10, hours=1, minutes=9, seconds=5)
         converted = self.cache.field_timedelta_to_json(td)
-        self.assertEqual(converted, 868145.0)
+        self.assertEqual(converted, 868145)
         out = self.cache.field_timedelta_from_json(converted)
         self.assertEqual(out, td)
 
     def test_timedelta_with_fractional_seconds(self):
         """Timedelta with fractions of a second can be stored and retrieved."""
-        td = timedelta(days=10, hours=1, minutes=9, seconds=5, milliseconds=10, microseconds=10)
+        td = timedelta(days=10, hours=1, minutes=9, seconds=5, milliseconds=10,
+                       microseconds=10)
         converted = self.cache.field_timedelta_to_json(td)
-        self.assertEqual(converted, 868145.01001)
+        self.assertEqual(converted, '868145.01001')
         out = self.cache.field_timedelta_from_json(converted)
         self.assertEqual(out, td)
 

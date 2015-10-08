@@ -11,3 +11,4 @@ Contributors
 ------------
 
 * `fpruitt <https://github.com/fpruitt>`
+* `creynold <https://github.com/creynold>`
