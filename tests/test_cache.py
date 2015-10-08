@@ -1,6 +1,6 @@
 """Tests for drf_cached_instances/cache.py."""
 
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from json import dumps
 import mock
 
@@ -329,6 +329,22 @@ class TestFieldConverters(TestCase):
         self.assertEqual(converted, '1411375920.123456')
         out = self.cache.field_datetime_from_json(converted)
         self.assertEqual(out, datetime(2014, 9, 22, 8, 52, 0, 123456, UTC))
+
+    def test_timedelta_without_fractional_seconds(self):
+        """Timedelta without fractions of a second can be stored and retrieved."""
+        td = timedelta(days=10, hours=1, minutes=9, seconds=5)
+        converted = self.cache.field_timedelta_to_json(td)
+        self.assertEqual(converted, 868145.0)
+        out = self.cache.field_timedelta_from_json(converted)
+        self.assertEqual(out, td)
+
+    def test_timedelta_with_fractional_seconds(self):
+        """Timedelta with fractions of a second can be stored and retrieved."""
+        td = timedelta(days=10, hours=1, minutes=9, seconds=5, milliseconds=10, microseconds=10)
+        converted = self.cache.field_timedelta_to_json(td)
+        self.assertEqual(converted, 868145.01001)
+        out = self.cache.field_timedelta_from_json(converted)
+        self.assertEqual(out, td)
 
     def test_pklist(self):
         """A list of primary keys is retrieved as a PkOnlyQueryset."""

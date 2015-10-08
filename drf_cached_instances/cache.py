@@ -265,6 +265,15 @@ class BaseCache(object):
         else:
             return ts
 
+    def field_timedelta_from_json(self, json_val):
+        """Convert float value for seconds to a timedelta object"""
+        return timedelta(seconds=json_val)
+
+    def field_timedelta_to_json(self, td):
+        """Convert a timedelta object to a float containing the total number of
+        seconds"""
+        return td.total_seconds()
+
     def field_pklist_from_json(self, data):
         """Load a PkOnlyQueryset from a JSON dict.
 
