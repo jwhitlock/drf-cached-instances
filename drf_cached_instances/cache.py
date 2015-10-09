@@ -287,7 +287,7 @@ class BaseCache(object):
                 return str(td.total_seconds())
             else:
                 return int(td.total_seconds())
-        except AttributeError: # pragma: no cover
+        except AttributeError:  # pragma: no cover
             # Python 2.6 fallback since total_seconds added in 2.7
             if td.microseconds > 0:
                 return str((td.microseconds +
