@@ -265,6 +265,36 @@ class BaseCache(object):
         else:
             return ts
 
+    def field_timedelta_from_json(self, json_val):
+        """Convert json_val to a timedelta object.
+
+        json_val contains total number of seconds in the timedelta.
+        If json_val is a string it will be converted to a float.
+        """
+        if isinstance(json_val, str):
+            return timedelta(seconds=float(json_val))
+        else:
+            return timedelta(seconds=json_val)
+
+    def field_timedelta_to_json(self, td):
+        """Convert timedelta to value containing total number of seconds.
+
+        If there are fractions of a second the return value will be a
+        string, otherwise it will be an int.
+        """
+        try:
+            if td.microseconds > 0:
+                return str(td.total_seconds())
+            else:
+                return int(td.total_seconds())
+        except AttributeError:  # pragma: no cover
+            # Python 2.6 fallback since total_seconds added in 2.7
+            if td.microseconds > 0:
+                return str((td.microseconds +
+                            (td.seconds + td.days*24*3600)*1e6) / 1e6)
+            else:
+                return (td.seconds + td.days*24*3600)
+
     def field_pklist_from_json(self, data):
         """Load a PkOnlyQueryset from a JSON dict.
 
