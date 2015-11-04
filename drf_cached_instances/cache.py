@@ -12,6 +12,8 @@ try:
     get_model = apps.get_model
 except ImportError:  # pragma: nocover
     from django.db.models.loading import get_model
+from django.utils.dateparse import parse_date, parse_datetime, parse_duration
+from django.utils.six import string_types
 
 from .models import PkOnlyModel, PkOnlyQueryset
 
@@ -241,6 +243,8 @@ class BaseCache(object):
 
     def field_date_to_json(self, day):
         """Convert a date to a date triple."""
+        if isinstance(day, string_types):
+            day = parse_date(day)
         return [day.year, day.month, day.day] if day else None
 
     def field_datetime_from_json(self, json_val):
@@ -248,6 +252,8 @@ class BaseCache(object):
         if type(json_val) == int:
             seconds = int(json_val)
             dt = datetime.fromtimestamp(seconds, utc)
+        elif json_val is None:
+            dt = None
         else:
             seconds, microseconds = [int(x) for x in json_val.split('.')]
             dt = datetime.fromtimestamp(seconds, utc)
@@ -259,6 +265,10 @@ class BaseCache(object):
 
         datetimes w/o timezone will be assumed to be in UTC
         """
+        if isinstance(dt, string_types):
+            dt = parse_datetime(dt)
+        if not dt:
+            return None
         ts = timegm(dt.utctimetuple())
         if dt.microsecond:
             return "{0}.{1:0>6d}".format(ts, dt.microsecond)
@@ -273,6 +283,8 @@ class BaseCache(object):
         """
         if isinstance(json_val, str):
             return timedelta(seconds=float(json_val))
+        elif json_val is None:
+            return None
         else:
             return timedelta(seconds=json_val)
 
@@ -282,6 +294,10 @@ class BaseCache(object):
         If there are fractions of a second the return value will be a
         string, otherwise it will be an int.
         """
+        if isinstance(td, string_types):
+            td = parse_duration(td)
+        if not td:
+            return None
         try:
             if td.microseconds > 0:
                 return str(td.total_seconds())

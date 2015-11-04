@@ -306,6 +306,19 @@ class TestFieldConverters(TestCase):
         out = self.cache.field_date_from_json(converted)
         self.assertEqual(out, the_date)
 
+    def test_date_string(self):
+        """A date string can be stored and retrieved as a datetime.date."""
+        the_date = '2015-11-04'
+        converted = self.cache.field_date_to_json(the_date)
+        self.assertEqual(converted, [2015, 11, 4])
+        out = self.cache.field_date_from_json(converted)
+        self.assertEqual(out, date(2015, 11, 4))
+
+    def test_date_other_string(self):
+        """A non-date string is stored as None."""
+        self.assertIsNone(self.cache.field_date_to_json('today'))
+        self.assertIsNone(self.cache.field_date_from_json(None))
+
     def test_datetime_with_ms(self):
         """A datetime with milliseconds can be stored and retrieved."""
         dt = datetime(2014, 9, 22, 8, 52, 0, 123456, UTC)
@@ -330,6 +343,19 @@ class TestFieldConverters(TestCase):
         out = self.cache.field_datetime_from_json(converted)
         self.assertEqual(out, datetime(2014, 9, 22, 8, 52, 0, 123456, UTC))
 
+    def test_datetime_string(self):
+        """A datetime string can be stored and retrieved as a datetime."""
+        dt = "2015-11-04 16:40:04.892566"
+        converted = self.cache.field_datetime_to_json(dt)
+        self.assertEqual(converted, '1446655204.892566')
+        out = self.cache.field_datetime_from_json(converted)
+        self.assertEqual(out, datetime(2015, 11, 4, 16, 40, 4, 892566, UTC))
+
+    def test_datetime_other_string(self):
+        """A non-datetime string is stored as null."""
+        self.assertIsNone(self.cache.field_datetime_to_json("now"))
+        self.assertIsNone(self.cache.field_datetime_from_json(None))
+
     def test_timedelta_without_fractional_seconds(self):
         """Timedelta without fractional seconds can be stored and retrieved."""
         td = timedelta(days=10, hours=1, minutes=9, seconds=5)
@@ -346,6 +372,19 @@ class TestFieldConverters(TestCase):
         self.assertEqual(converted, '868145.01001')
         out = self.cache.field_timedelta_from_json(converted)
         self.assertEqual(out, td)
+
+    def test_timedelta_duration_string(self):
+        """A duration string can be stored and retrieved as a timedelta."""
+        td = "5 3:30:15.99"
+        converted = self.cache.field_timedelta_to_json(td)
+        self.assertEqual(converted, '444615.99')
+        out = self.cache.field_timedelta_from_json(converted)
+        self.assertEqual(out, timedelta(5, 12615, 990000))
+
+    def test_timedelta_other_string(self):
+        """A non-duration string is stored as null."""
+        self.assertIsNone(self.cache.field_timedelta_to_json("a long time"))
+        self.assertIsNone(self.cache.field_timedelta_from_json(None))
 
     def test_pklist(self):
         """A list of primary keys is retrieved as a PkOnlyQueryset."""
