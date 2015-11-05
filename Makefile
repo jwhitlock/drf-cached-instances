@@ -15,7 +15,7 @@ help:
 	@echo "test - run tests quickly with the default Python"
 	@echo "test-all - run tests on every Python version with tox"
 
-clean: clean-build clean-pyc clean-test
+clean: clean-build clean-test clean-pyc
 
 qa: lint coverage
 
@@ -27,10 +27,10 @@ clean-build:
 	rm -fr *.egg-info
 
 clean-pyc:
-	find . \( ! -name .tox \) -name '*.pyc' -exec rm -f {} +
-	find . \( ! -name .tox \) -name '*.pyo' -exec rm -f {} +
-	find . \( ! -name .tox \) -name '*~' -exec rm -f {} +
-	find . \( ! -name .tox \) -name '__pycache__' -exec rm -f -R {} +
+	find . -path ./.tox -prune -o -name '*.pyc' -exec rm -f {} +
+	find . -path ./.tox -prune -o -name '*.pyo' -exec rm -f {} +
+	find . -path ./.tox -prune -o -name '*~' -exec rm -f {} +
+	find . -path ./.tox -prune -o -name '__pycache__' -exec rm -f -R {} +
 
 clean-test:
 	rm -fr .tox/
