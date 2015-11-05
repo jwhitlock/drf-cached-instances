@@ -3,6 +3,13 @@
 History
 =======
 
+0.3.3 (2015-11-05)
+------------------
+* Add serilizer for datetime.timedelta, to support Django 1.8's
+  DurationField (creynold)
+* Convert string representations of datetimes, dates, and timedeltas
+* Expand tests to Django 1.9 beta 1 and Django REST Framework 3.3
+
 0.3.2 (2015-09-23)
 ------------------
 * Remove deprecation warning in Django 1.8
