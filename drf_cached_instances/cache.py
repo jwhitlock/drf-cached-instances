@@ -293,18 +293,10 @@ class BaseCache(object):
             td = parse_duration(td)
         if not td:
             return None
-        try:
-            if td.microseconds > 0:
-                return str(td.total_seconds())
-            else:
-                return int(td.total_seconds())
-        except AttributeError:  # pragma: no cover
-            # Python 2.6 fallback since total_seconds added in 2.7
-            if td.microseconds > 0:
-                return str((td.microseconds +
-                            (td.seconds + td.days*24*3600)*1e6) / 1e6)
-            else:
-                return (td.seconds + td.days*24*3600)
+        if td.microseconds > 0:
+            return str(td.total_seconds())
+        else:
+            return int(td.total_seconds())
 
     def field_pklist_from_json(self, data):
         """Load a PkOnlyQueryset from a JSON dict.
