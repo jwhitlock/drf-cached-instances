@@ -2,7 +2,7 @@
 # Requirements for running drf-cached-instances
 #
 
-Django==1.8.4
+Django==1.8.6
 djangorestframework==3.2.4
 
 
@@ -32,7 +32,7 @@ coverage==4.0
 django-nose==1.4.1
 
 # Django extensions
-django-extensions==1.5.7
+django-extensions==1.5.9
 
 # Documentation
 Sphinx==1.3.1

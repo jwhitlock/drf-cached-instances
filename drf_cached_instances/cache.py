@@ -6,15 +6,10 @@ from pytz import utc
 import json
 
 from django.conf import settings
-try:
-    # Django 1.8 and later
-    from django.apps import apps
-    get_model = apps.get_model
-except ImportError:  # pragma: nocover
-    from django.db.models.loading import get_model
-from django.utils.dateparse import parse_date, parse_datetime, parse_duration
-from django.utils.six import string_types
+from django.utils.dateparse import parse_date, parse_datetime
+from django.utils import six
 
+from .compat import get_model, parse_duration
 from .models import PkOnlyModel, PkOnlyQueryset
 
 
@@ -243,7 +238,7 @@ class BaseCache(object):
 
     def field_date_to_json(self, day):
         """Convert a date to a date triple."""
-        if isinstance(day, string_types):
+        if isinstance(day, six.string_types):
             day = parse_date(day)
         return [day.year, day.month, day.day] if day else None
 
@@ -265,7 +260,7 @@ class BaseCache(object):
 
         datetimes w/o timezone will be assumed to be in UTC
         """
-        if isinstance(dt, string_types):
+        if isinstance(dt, six.string_types):
             dt = parse_datetime(dt)
         if not dt:
             return None
@@ -294,7 +289,7 @@ class BaseCache(object):
         If there are fractions of a second the return value will be a
         string, otherwise it will be an int.
         """
-        if isinstance(td, string_types):
+        if isinstance(td, six.string_types):
             td = parse_duration(td)
         if not td:
             return None
