@@ -31,7 +31,7 @@ viewing the browsercompat source code for a full example implementation.
 
 * Code: https://github.com/jwhitlock/drf-cached-instances
 * Free software: `Mozilla Public License Version 2.0`_
-* Documentation: https://drf-cached-instances.readthedocs.org
+* Documentation: https://drf-cached-instances.readthedocs.io
 
 How it works
 ------------
