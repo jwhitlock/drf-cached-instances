@@ -1,24 +1,52 @@
 # Config file for automatic testing at travis-ci.org
-
+sudo: false
 language: python
 install: pip install tox
 script: tox
-env:
-  - TOXENV=py27-django17-drf32
-  - TOXENV=py34-django17-drf33
-  - TOXENV=py27-django18-drf32
-  - TOXENV=py34-django18-drf33
-  - TOXENV=py27-django19-drf32
-  - TOXENV=py34-django19-drf33
-  - TOXENV=py27-djangomaster-drf32
-  - TOXENV=py34-djangomaster-drf33
-  - TOXENV=docs
-  - TOXENV=flake8
-  - TOXENV=coverage
 matrix:
+    include:
+        # Supported Python / Django / DRF combinations
+        - env: TOXENV=py27-django18-drf32
+          python: "2.7"
+        - env: TOXENV=py27-django18-drf33
+          python: "2.7"
+        - env: TOXENV=py27-django18-drf34
+          python: "2.7"
+        - env: TOXENV=py34-django18-drf32
+          python: "3.4"
+        - env: TOXENV=py34-django18-drf33
+          python: "3.4"
+        - env: TOXENV=py34-django18-drf34
+          python: "3.4"
+        - env: TOXENV=py27-django19-drf33
+          python: "2.7"
+        - env: TOXENV=py27-django19-drf34
+          python: "2.7"
+        - env: TOXENV=py34-django19-drf33
+          python: "3.4"
+        - env: TOXENV=py34-django19-drf34
+          python: "3.4"
+        - env: TOXENV=py27-django110-drf34
+          python: "2.7"
+        - env: TOXENV=py34-django110-drf34
+          python: "3.4"
+        - env: TOXENV=py35-django110-drf34
+          python: "3.5"
+        - env: TOXENV=py27-djangomaster-drf34
+          python: "2.7"
+        - env: TOXENV=py34-djangomaster-drf34
+          python: "3.4"
+        - env: TOXENV=py35-djangomaster-drf34
+          python: "3.5"
+        # Quality checks
+        - env: TOXENV=docs
+          python: "2.7"
+        - env: TOXENV=flake8
+          python: "2.7"
+        - env: TOXENV=coverage
+          python: "2.7"
     allow_failures:
         # Master is allowed to fail
-        - env: TOXENV=py27-djangomaster-drf32
-        - env: TOXENV=py34-djangomaster-drf33
-
-
+        - env: TOXENV=py27-djangomaster-drf34
+        - env: TOXENV=py34-djangomaster-drf34
+        - env: TOXENV=py35-djangomaster-drf34
