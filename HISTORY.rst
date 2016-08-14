@@ -3,6 +3,11 @@
 History
 =======
 
+0.3.4 (2016-08-14)
+------------------
+* Drop support for Django 1.7, Python 2.6
+* Expand tests to Django 1.10, Django REST Framework 3.4, Python 3.5
+
 0.3.3 (2015-11-05)
 ------------------
 * Add serializer for datetime.timedelta, to support Django 1.8's

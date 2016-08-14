@@ -9,7 +9,7 @@ cache.
 
 There are a few steps needed to integrate drf-cached-instances into your
 project.  See the sample app ``sample_poll_app`` for a small example, or
-`web-platform-compat`_ for a fuller example.
+`browsercompat`_ for a fuller example.
 
 Create an app-specific cache strategy
 -------------------------------------
@@ -152,4 +152,4 @@ use the default ``update_only=False`` in production.
 
 .. _`Django REST Framework`: http://www.django-rest-framework.org
 .. _Celery: http://www.celeryproject.org
-.. _`web-platform-compat`: https://github.com/mozilla/web-platform-compat
+.. _`browsercompat`: https://github.com/mdn/browsercompat

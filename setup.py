@@ -26,7 +26,7 @@ Cached Instances for Django REST Framework
 """ % (readme_body, history)
 
 requirements = [
-    'Django>=1.6',
+    'Django>=1.8',
     'pytz',
     'djangorestframework',
 ]
@@ -59,17 +59,17 @@ setup(
     zip_safe=False,
     keywords='drf-cached-instances',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'Framework :: Django',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
         'Natural Language :: English',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
     test_suite='sample_site.runtests.runtests',
     tests_require=test_requirements

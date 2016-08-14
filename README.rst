@@ -64,10 +64,9 @@ With only a few changes to existing code, your read views could be a lot faster.
 
 Project status
 --------------
-This code is used for the browsercompat_ project, which is in development
-as of September 2015.  The code may change in response to the needs of the
-browsercompat project.  It is expected to stabilize by early 2016.  And,
-like all open source projects, more documentation is needed.
+This code is used for the browsercompat_ project, which was developed from 2015
+- 2016, but is on hold as of August 2016. Since this was the primary user of
+this code, it may be a while before more features are implemented.
 
 .. _`Django REST Framework`: http://www.django-rest-framework.org
 .. _`browsercompat`: https://github.com/mdn/browsercompat

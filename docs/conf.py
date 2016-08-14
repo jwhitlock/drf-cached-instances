@@ -179,7 +179,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'web-platform-compat-doc'
+htmlhelp_basename = 'drf-cached-instances-doc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
