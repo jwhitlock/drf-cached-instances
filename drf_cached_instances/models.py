@@ -8,7 +8,6 @@ in common Django REST Framework use cases.
 
 
 class PkOnlyModel(object):
-
     """Emulate a Django model with only the primary key (pk) set.
 
     This is used to represent related objects.
@@ -22,7 +21,6 @@ class PkOnlyModel(object):
 
 
 class PkOnlyQueryset(object):
-
     """Emulate a Django queryset with only the primary keys (pks) available.
 
     This is used to represent a group of related objects, which can be
@@ -58,7 +56,6 @@ class PkOnlyQueryset(object):
 
 
 class CachedModel(object):
-
     """Emulate a Django model, but with data loaded from the cache."""
 
     def __init__(self, model, data):
@@ -79,7 +76,6 @@ class CachedModel(object):
 
 
 class CachedQueryset(object):
-
     """Emulate a Djange queryset, but with data loaded from the cache.
 
     A real queryset is used to get filtered lists of primary keys, but the

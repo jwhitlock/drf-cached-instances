@@ -10,7 +10,6 @@ from django.dispatch import receiver
 
 
 class Question(models.Model):
-
     """A poll question."""
 
     question_text = models.CharField(max_length=200)
@@ -18,7 +17,6 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
-
     """An answer to a poll question."""
 
     question = models.ForeignKey(Question, related_name='choices')

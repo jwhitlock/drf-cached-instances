@@ -17,7 +17,6 @@ from sample_poll_app.models import Question, Choice
 
 
 class SharedCacheTests(object):
-
     """Define generic cache tests."""
 
     def test_get_instances_no_specs(self):
@@ -91,7 +90,6 @@ class SharedCacheTests(object):
 
 @override_settings(USE_DRF_INSTANCE_CACHE=True)
 class TestCache(SharedCacheTests, TestCase):
-
     """Test cache functions when the instance cache is enabled."""
 
     def setUp(self):
@@ -240,7 +238,6 @@ class TestCache(SharedCacheTests, TestCase):
 
 @override_settings(USE_DRF_INSTANCE_CACHE=True)
 class TestVersionsCache(SharedCacheTests, TestCase):
-
     """Test cache functions when multiple versions are defined."""
 
     def setUp(self):
@@ -268,7 +265,6 @@ class TestVersionsCache(SharedCacheTests, TestCase):
 
 @override_settings(USE_DRF_INSTANCE_CACHE=False)
 class TestCacheDisabled(SharedCacheTests, TestCase):
-
     """Test cache functions when the instance cache is disabled."""
 
     def setUp(self):
@@ -291,7 +287,6 @@ class TestCacheDisabled(SharedCacheTests, TestCase):
 
 
 class TestFieldConverters(TestCase):
-
     """Test the built-in field converter methods."""
 
     def setUp(self):

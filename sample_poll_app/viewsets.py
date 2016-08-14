@@ -9,14 +9,12 @@ from .serializers import ChoiceSerializer, QuestionSerializer, UserSerializer
 
 
 class ModelViewSet(CachedViewMixin, BaseModelViewSet):
-
     """ModelViewSet that uses CachedViewMixin."""
 
     cache_class = SampleCache
 
 
 class UserViewSet(ModelViewSet):
-
     """API endpoint that allows users to be viewed or edited."""
 
     queryset = User.objects.all()
@@ -24,7 +22,6 @@ class UserViewSet(ModelViewSet):
 
 
 class QuestionViewSet(ModelViewSet):
-
     """API endpoint that allows questions to be viewed or edited."""
 
     queryset = Question.objects.all()
@@ -32,7 +29,6 @@ class QuestionViewSet(ModelViewSet):
 
 
 class ChoiceViewSet(ModelViewSet):
-
     """API endpoint that allows choices to be viewed or edited."""
 
     queryset = Choice.objects.all()

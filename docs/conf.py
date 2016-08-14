@@ -21,7 +21,7 @@ parent = os.path.dirname(cwd)
 sys.path.append(parent)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sample_site.settings")
 
-from drf_cached_instances import __version__
+from drf_cached_instances import __version__  # flake8: noqa
 
 # -- General configuration ------------------------------------------------
 

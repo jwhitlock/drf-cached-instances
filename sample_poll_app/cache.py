@@ -8,7 +8,6 @@ from .models import Question, Choice
 
 
 class SampleCache(BaseCache):
-
     """Cache for the sample poll cache."""
 
     def user_default_serializer(self, obj):

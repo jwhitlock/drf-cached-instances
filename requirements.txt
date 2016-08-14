@@ -21,10 +21,10 @@ celery==3.1.19
 wheel==0.26.0
 
 # PEP8, PEP257, and static analysis
-pep8==1.6.2
-flake8==2.5.0
+pep8==1.7.0
+flake8==3.0.4
 pep257==0.7.0
-flake8-docstrings==0.2.1.post1
+flake8-docstrings==1.0.2
 
 # Code coverage
 coverage==4.0.2

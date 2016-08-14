@@ -6,7 +6,6 @@ from .models import CachedQueryset
 
 
 class CachedViewMixin(object):
-
     """Mixin to add caching to a DRF viewset.
 
     A user should either define cache_class or override get_queryset_cache().

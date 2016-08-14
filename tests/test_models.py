@@ -9,7 +9,6 @@ from sample_poll_app.cache import SampleCache
 
 
 class TestCachedModel(TestCase):
-
     """Tests for CachedModel."""
 
     def test_has_data(self):
@@ -32,7 +31,6 @@ class TestCachedModel(TestCase):
 
 
 class TestCachedQueryset(TestCase):
-
     """Tests for TestCachedQueryset."""
 
     def setUp(self):
@@ -144,7 +142,6 @@ class TestCachedQueryset(TestCase):
 
 
 class TestPkOnlvQueryset(TestCase):
-
     """Tests for PkOnlyQueryset."""
 
     def setUp(self):

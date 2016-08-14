@@ -13,7 +13,6 @@ from sample_poll_app.viewsets import QuestionViewSet
 
 
 class CachedViewMixinTest(APITestCase):
-
     """Tests for the CachedViewMixin."""
 
     def test_list_uses_cachedqueryset(self):

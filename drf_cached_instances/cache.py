@@ -14,7 +14,6 @@ from .models import PkOnlyModel, PkOnlyQueryset
 
 
 class BaseCache(object):
-
     """Base instance cache.
 
     To make the cache useful, create a derived class with methods for
