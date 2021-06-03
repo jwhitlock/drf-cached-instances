@@ -56,7 +56,7 @@ dj-static==0.0.6
 Werkzeug==0.11.10
 
 # Django debug toolbar
-django-debug-toolbar==1.5
+django-debug-toolbar==1.11.1
 
 # Testing library, added as unittest.mock in Python 3.3
 mock==2.0.0
