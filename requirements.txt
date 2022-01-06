@@ -11,7 +11,7 @@ djangorestframework>=3.4,<3.5
 #
 
 # Celery - async task management
-celery==3.1.23
+celery==5.2.2
 
 #
 # Requirements for developing drf-cached-instances
