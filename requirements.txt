@@ -18,7 +18,7 @@ celery==3.1.23
 #
 
 # Packaging
-wheel==0.29.0
+wheel==0.38.1
 
 # PEP8, PEP257, and static analysis
 pep8==1.7.0
